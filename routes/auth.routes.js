@@ -21,7 +21,7 @@ AuthRouter.post("/register", async (req, res) => {
     req.body.password = await BcryptService.bcryptPassword(password);
     const code = Math.round(100000 + Math.random() * 999999).toString();
     const user = await UserModel.create({ ...req.body, role: ["user"] });
-    const text = `Thank you to register in Global Shopping Spot. Your verification code is ${code.slice(
+    const text = `Thank you to register in Dexter Coffees. Your verification code is ${code.slice(
       0,
       6
     )}. Please enter this code to verify your email`;
