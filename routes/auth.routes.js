@@ -124,7 +124,11 @@ AuthRouter.post("/forgot/password", async (req, res) => {
     const user = await UserModel.findOne({ email, verified: true });
     if (user) {
       const token = JwtService.generateToken({ email }, "1h");
-      return res.status(200).send({ token });
+      const text = `You can reset your password by clicking the link https://www.dextercoffees.com/reset-password?token=${token}`;
+      await MailService.sendMail(email, "Reset Password", text);
+      return res
+        .status(200)
+        .send({ message: "Reset password link has been sent to your email" });
     }
     return res.status(404).send({ message: "Please register yourself" });
   } catch (err) {
